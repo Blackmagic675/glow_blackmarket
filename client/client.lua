@@ -332,7 +332,7 @@ RegisterNetEvent("glow_blackmarket_cl:removeLootTarget", function(index)
 end)
 
 RegisterNetEvent("glow_blackmarket_cl:lootContainer", function(index)
-    local ped = PlayerPedId()
+    --[[local ped = PlayerPedId()
     loadAnimDict(Config.lootAnim.dict)
     TaskPlayAnim(ped, Config.lootAnim.dict, Config.lootAnim.anim, 1.0, 1.0, -1, 1, 0, 0, 0, 0)
     QBCore.Functions.Progressbar("looting_crate", "Grabbing Items..", Config.lootTime, false, true, {
@@ -345,7 +345,27 @@ RegisterNetEvent("glow_blackmarket_cl:lootContainer", function(index)
     end, function() -- Cancel
         TriggerServerEvent("glow_blackmarket_sv:cancelLooting", index)
         QBCore.Functions.Notify("Cancelled", "error")
-    end)
+    end)]]
+    if lib.progressBar({
+        duration = Config.lootTime,
+        label = 'Grabbing Items..',
+        useWhileDead = false,
+        canCancel = true,
+        disable = {
+            car = true,
+            move = true,
+            combat = true,
+        },
+        anim = {
+            dict = Config.lootAnim.dict,
+            clip = Config.lootAnim.anim
+        },
+    }) then 
+        TriggerServerEvent("glow_blackmarket_sv:finishLooting", index)
+    else 
+        TriggerServerEvent("glow_blackmarket_sv:cancelLooting", index)
+        QBCore.Functions.Notify("Cancelled", "error") 
+    end
 end)
 
 RegisterNetEvent("glow_blackmarket_cl:orderComplete", function()
