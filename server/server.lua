@@ -321,8 +321,9 @@ RegisterNetEvent("glow_blackmarket_sv:attemptLoot", function(index)
     end
 
     if pendingOrders[index].isLooted then
-        TriggerClientEvent("inventory:client:SetCurrentStash", src, pendingOrders[index].stashId)
-        exports["qb-inventory"]:OpenInventory("stash", pendingOrders[index].stashId, nil, src)
+        --TriggerClientEvent("inventory:client:SetCurrentStash", src, pendingOrders[index].stashId)
+        --exports["qb-inventory"]:OpenInventory("stash", pendingOrders[index].stashId, nil, src)
+	TriggerClientEvent("glow_blackmarket_cl:openLoot", src, pendingOrders[index].stashId)
         return
     end
 
@@ -355,8 +356,9 @@ RegisterNetEvent("glow_blackmarket_sv:finishLooting", function(index)
 
     saveOrderStash(stashId, orderItems, function(id)
         if id then
-            TriggerClientEvent("inventory:client:SetCurrentStash", src, stashId)
-            exports["qb-inventory"]:OpenInventory("stash", stashId, nil, src)
+            --TriggerClientEvent("inventory:client:SetCurrentStash", src, stashId)
+            --exports["qb-inventory"]:OpenInventory("stash", stashId, nil, src)
+	    TriggerClientEvent("glow_blackmarket_cl:openLoot", src, stashId)
         end
     end)
 
