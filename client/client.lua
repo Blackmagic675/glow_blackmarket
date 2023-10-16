@@ -305,6 +305,11 @@ RegisterNetEvent("glow_blackmarket_cl:updateOpenContainer", function(index, cont
     targetZones[#targetZones + 1] = zoneName
 end)
 
+RegisterNetEvent("glow_blackmarket_cl:openLoot", function(stashid)
+    TriggerServerEvent('inventory:server:OpenInventory', 'stash', stashid)
+    TriggerEvent("inventory:client:SetCurrentStash", stashid)
+end)
+
 RegisterNetEvent("glow_blackmarket_cl:removeLockTarget", function(index)
     print("removing lock target ", index)
     exports['qb-target']:RemoveZone("bm_lock_"..index)
